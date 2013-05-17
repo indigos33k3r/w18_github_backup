@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# http://www.gnu.org/software/bash/manual/bash.html#The-Set-Builtin
+set -o errexit
+
+script=`readlink -f $0`
+scriptdir=`dirname $script`
+scriptname=`basename $script`
+
+now=`date +%Y%m%d_%H%M%S`
+mkdir github_$now
+
+cd github_$now
+
+	# download them all
+	$scriptdir/github_repos | while read repo url; do
+		git clone $url $repo
+	done
+
+cd ..
+
+# put them in .tar.gz and .tar.gz.md5
+tar caf github_$now.tar.gz github_$now
+md5sum github_$now.tar.gz > github_$now.tar.gz.md5
+
+rm -rf github_$now

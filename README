@@ -1,0 +1,8 @@
+w18_github_backup: make a full backup copy of github repos
+==========================================================
+
+REPLACE vbarbarosh BY USERNAME
+
+	src/github_repos
+	> curl_setopt($curl, CURLOPT_URL,
+	>	'https://api.github.com/users/USERNAME/repos');
